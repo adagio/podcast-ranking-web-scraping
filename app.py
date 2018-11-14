@@ -3,6 +3,7 @@ from pprint import pprint
 from modules.utils import *
 from modules.scraping import *
 
+
 path = 'sandbox/content/'
 
 filenames = [
@@ -19,17 +20,19 @@ url_paths = [
     'podcast-internet-tecnologia_sc_f445_2.html'
 ]
 
-
 podcasts = []
 
-"""for filename in filenames:
+for filename in filenames:
     filepath = path + filename
-    soup = getSoup(read_file(filepath))
-    get_podcasts(soup, podcasts)"""
+    soup = get_soup(read_file(filepath))
+    these_podcasts = get_podcasts(soup)
+    podcasts.extend(these_podcasts)
 
-for url_path in url_paths:
+""" for url_path in url_paths:
     url = base_path + url_path
-    soup = getSoup(get_url_content(url))
-    get_podcasts(soup, podcasts)
+    soup = get_soup(get_url_content(url))
+    these_podcasts = get_podcasts(soup)
+    podcasts.extend(these_podcasts) """
 
-pprint(podcasts)
+for podcast in podcasts:
+    print(podcast) # is using DataClassPodcast __str__ representation
