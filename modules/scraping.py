@@ -1,8 +1,6 @@
 from bs4 import BeautifulSoup
 import enum
 from dataclasses import dataclass
-import json
-from dataclasses_json import dataclass_json
 
 
 @dataclass_json
@@ -78,8 +76,7 @@ def get_values(html_block):
 
 def build_podcast_object(program):
     values = get_values(program)
-    values_in_json = json.dumps(values)
-    podcast = DataClassPodcast.from_json(values_in_json)
+    podcast = DataClassPodcast(**values)
     return podcast
 
 
