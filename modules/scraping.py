@@ -3,7 +3,6 @@ import enum
 from dataclasses import dataclass
 
 
-@dataclass_json
 @dataclass(frozen=True)
 class DataClassPodcast:
     __slots__ = ['title', 'desc', 'episode', 'url']
