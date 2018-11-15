@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import enum
 from dataclasses import dataclass
+from ruamel.yaml import YAML
 
 
 @dataclass(frozen=True)
@@ -28,47 +29,39 @@ def get_html_tag(html_block, pattern):
     return html_block.select(pattern)[0]
 
 
-formulas = [
-    {
-        'key': 'title',
-        'html_pattern': 'meta[itemprop="name"]',
-        'content_mode': ContentMode.content_attribute
-    },
-    {
-        'key': 'desc',
-        'html_pattern': 'meta[itemprop="description"]',
-        'content_mode': ContentMode.content_attribute
-    },
-    {
-        'key': 'url',
-        'html_pattern': 'meta[itemprop="url"]',
-        'content_mode': ContentMode.content_attribute
-    },
-    {
-        'key': 'episode',
-        'html_pattern': '.microphone',
-        'content_mode': ContentMode.text
-    },
-]
+def load_formulas():
+    stream = open("./sandbox/content/formulas.yaml", 'r')
+    yaml = YAML()
+    yaml_formulas = yaml.load(stream)
+    return yaml_formulas
 
-
+#TODO use the enum, not the literal
 def get_value(tag, content_mode):
-    if (content_mode == ContentMode.content_attribute):
+    if (content_mode == "content_attribute"):
         return tag.attrs['content']
-    elif (content_mode == ContentMode.text):
+    elif (content_mode == "text"):
         return tag.getText().strip()
     else:
         return None
+
+
+yaml_formulas = load_formulas()
 
 
 def get_values(html_block):
 
     values = {}
 
-    for formula in formulas:
+    for i, (key, ordered_formula) in enumerate(yaml_formulas.items()):
+        formula = dict(ordered_formula)
         html_tag = get_html_tag(html_block, formula['html_pattern'])
         value = get_value(html_tag, formula['content_mode'])
-        values[formula['key']] = value
+        values[key] = value
+
+    #for formula in formulas:
+    #    html_tag = get_html_tag(html_block, formula['html_pattern'])
+    #    value = get_value(html_tag, formula['content_mode'])
+    #    values[formula['key']] = value
 
     return values
 
