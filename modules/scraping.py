@@ -1,23 +1,6 @@
 from bs4 import BeautifulSoup
-import enum
-from dataclasses import dataclass
-from ruamel.yaml import YAML
-
-
-@dataclass(frozen=True)
-class DataClassPodcast:
-    __slots__ = ['title', 'desc', 'episode', 'url']
-    title: str
-    desc: str
-    episode: str
-    url: str
-    def __str__(self):
-        return f'{self.title}'
-
-
-class ContentMode(enum.Enum):
-    content_attribute = 0
-    text = 1
+from modules.formulas import *
+from modules.DataClassPodcast import DataClassPodcast
 
 
 def get_soup(text):
@@ -29,17 +12,10 @@ def get_html_tag(html_block, pattern):
     return html_block.select(pattern)[0]
 
 
-def load_formulas():
-    stream = open("./sandbox/content/formulas.yaml", 'r')
-    yaml = YAML()
-    yaml_formulas = yaml.load(stream)
-    return yaml_formulas
-
-#TODO use the enum, not the literal
 def get_value(tag, content_mode):
-    if (content_mode == "content_attribute"):
+    if ( content_mode == ContentMode.content_attribute ):
         return tag.attrs['content']
-    elif (content_mode == "text"):
+    elif ( content_mode == ContentMode.text ):
         return tag.getText().strip()
     else:
         return None
@@ -57,11 +33,6 @@ def get_values(html_block):
         html_tag = get_html_tag(html_block, formula['html_pattern'])
         value = get_value(html_tag, formula['content_mode'])
         values[key] = value
-
-    #for formula in formulas:
-    #    html_tag = get_html_tag(html_block, formula['html_pattern'])
-    #    value = get_value(html_tag, formula['content_mode'])
-    #    values[formula['key']] = value
 
     return values
 
