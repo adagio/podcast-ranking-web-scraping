@@ -7,6 +7,9 @@ desc:
 url:
   html_pattern: meta[itemprop="description"]
   content_mode: content_attribute
-episode:
+episodes:
   html_pattern: .microphone
+  content_mode: text
+stair:
+  html_pattern: .stair
   content_mode: text

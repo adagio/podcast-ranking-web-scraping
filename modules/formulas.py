@@ -14,7 +14,7 @@ def update_enums(yaml_formulas):
 
 
 def load_formulas():
-    stream = open("./sandbox/content/formulas.yaml", 'r')
+    stream = open("modules/formulas.yaml", 'r')
     yaml = YAML()
     yaml_formulas = yaml.load(stream)
 
