@@ -32,7 +32,7 @@ class Ranker:
 
         podcasts = []
 
-        for page_index in range(1, self.max_pages):
+        for page_index in range(1, self.max_pages + 1):
             url_path = self.get_url_path(
                 self.category_name,
                 self.category_id,
