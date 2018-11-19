@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from modules.formulas import *
-from modules.DataClassPodcast import DataClassPodcast
+from modules.dataclass_podcast import DataClassPodcast
 
 
 def get_soup(text):

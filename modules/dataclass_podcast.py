@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-@dataclass(frozen=True)
+@dataclass
 class DataClassPodcast:
     __slots__ = ['title', 'desc', 'episode', 'url']
     title: str
