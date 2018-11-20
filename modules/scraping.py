@@ -16,7 +16,11 @@ def get_value(tag, content_mode):
     if ( content_mode == ContentMode.content_attribute ):
         return tag.attrs['content']
     elif ( content_mode == ContentMode.text ):
-        return tag.getText().strip()
+        text_value = tag.getText().strip()
+        if text_value != '':
+            return int(tag.getText().strip())
+        else:
+            return None
     else:
         return None
 
@@ -38,6 +42,11 @@ def get_values(html_block):
 
 
 def build_podcast_object(program):
+    values = get_values(program)
+    return values
+
+
+def build_podcast_dataclass(program):
     values = get_values(program)
     podcast = DataClassPodcast(**values)
     return podcast

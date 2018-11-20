@@ -1,16 +1,19 @@
 from modules.ranker import Ranker
 from modules.storage import Storage
 
-#TODO other categories
+category_name = 'internet-tecnologia'
+category_id = '445'
+
 ranker = Ranker(
-    category_name='internet-tecnologia',
-    category_id='445',
+    category_name=category_name,
+    category_id=category_id,
     max_pages=3
 )
 podcasts = ranker.get_podcasts()
 
-Storage.save('storage/ranking.pkl', podcasts)
-stored_podcasts = Storage.load('storage/ranking.pkl')
+Storage.save_csv(f'storage/ranking-{category_id}', podcasts)
 
-for podcast in stored_podcasts:
-    print(podcast)
+#stored_podcasts = Storage.load(f'storage/ranking-{category_id}.pkl')
+
+#for podcast in stored_podcasts:
+#    print(podcast)

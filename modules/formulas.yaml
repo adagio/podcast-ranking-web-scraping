@@ -5,7 +5,7 @@ desc:
   html_pattern: meta[itemprop="description"]
   content_mode: content_attribute
 url:
-  html_pattern: meta[itemprop="description"]
+  html_pattern: meta[itemprop="url"]
   content_mode: content_attribute
 episodes:
   html_pattern: .microphone
