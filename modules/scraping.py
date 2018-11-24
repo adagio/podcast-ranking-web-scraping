@@ -34,15 +34,16 @@ def get_values(html_block):
 
     for i, (key, ordered_formula) in enumerate(yaml_formulas.items()):
         formula = dict(ordered_formula)
-        html_tag = get_html_tag(html_block, formula['html_pattern'])
-        value = get_value(html_tag, formula['content_mode'])
-        values[key] = value
+        if formula['enabled']:
+            html_tag = get_html_tag(html_block, formula['html_pattern'])
+            value = get_value(html_tag, formula['content_mode'])
+            values[key] = value
 
     return values
 
 
-def build_podcast_object(program):
-    values = get_values(program)
+def build_podcast_object(html_block):
+    values = get_values(html_block)
     return values
 
 
@@ -52,18 +53,20 @@ def build_podcast_dataclass(program):
     return podcast
 
 
-def get_podcasts(resource: BeautifulSoup):
+def scrap_podcasts(resource: BeautifulSoup, category_id, page_index):
     """
         Extrae el listado de podcasts 
         Devuelve una lista con el diccionario de elementos encontrados
     """
     podcasts = []
-    for podcast_html_block in resource.findAll("div", {"class": ["modulo-type-programa"]}):
+    for key,podcast_html_block in enumerate( resource.findAll("div", {"class": ["modulo-type-programa"]}) ):
         try:
             podcast = build_podcast_object(podcast_html_block)
+            podcast['page_pos'] = key
+            podcast['category_id'] = category_id
+            podcast['page_ix'] = page_index
             podcasts.append(podcast)
         except IndexError:
             print("No se puede capturar el contenido") 
 
     return podcasts
-

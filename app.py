@@ -1,5 +1,6 @@
 from modules.ranker import Ranker
 from modules.storage import Storage
+import pandas as pd
 
 category_name = 'internet-tecnologia'
 category_id = '445'
@@ -11,7 +12,8 @@ ranker = Ranker(
 )
 podcasts = ranker.get_podcasts()
 
-Storage.save_csv(f'storage/ranking-{category_id}', podcasts)
+df = pd.DataFrame(podcasts)
+Storage.save_csv(f'storage/ranking-{category_id}.csv', dataframe = df)
 
 #stored_podcasts = Storage.load(f'storage/ranking-{category_id}.pkl')
 

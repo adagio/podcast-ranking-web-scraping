@@ -1,3 +1,5 @@
+from concurrent.futures import ProcessPoolExecutor, as_completed
+
 from modules.utils import *
 from modules.scraping import *
 
@@ -28,20 +30,29 @@ class Ranker:
         return url_path
 
 
-    def get_podcasts(self):
-
-        podcasts = []
-
-        for page_index in range(1, self.max_pages + 1):
-            url_path = self.get_url_path(
-                self.category_name,
-                self.category_id,
-                page_index
-            )
-            url = self.base_path + url_path
-            soup = get_soup(get_url_content(url))
-            these_podcasts = get_podcasts(soup)
-            podcasts.extend(these_podcasts)
-
+    def get_podcasts_by_page(self, page_index):
+        url_path = self.get_url_path(
+            self.category_name,
+            self.category_id,
+            page_index
+        )
+        print(url_path)
+        url = self.base_path + url_path
+        soup = get_soup(get_url_content(url))
+        podcasts = scrap_podcasts(
+            resource = soup,
+            category_id = self.category_id,
+            page_index = page_index
+        )
         return podcasts
+    
 
+    def get_podcasts(self):       
+
+        with ProcessPoolExecutor(max_workers=3) as executor:
+            podcasts = []
+            futures = [ executor.submit(self.get_podcasts_by_page, page) for page in
+                       range(1, self.max_pages + 1) ]
+            for completed_futures in as_completed(futures):
+                podcasts.extend(completed_futures.result())
+            return podcasts
