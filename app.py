@@ -1,19 +1,16 @@
-from modules.ranker import Ranker
-from modules.storage import Storage
 import pandas as pd
 
-category_name = 'internet-tecnologia'
-category_id = '445'
+from modules.storage import Storage
+from modules.driver import Driver
 
-ranker = Ranker(
-    category_name=category_name,
-    category_id=category_id,
-    max_pages=3
-)
-podcasts = ranker.get_podcasts()
+
+driver = Driver('storage/categories.csv')
+
+#podcasts = driver.drive_sync()
+podcasts = driver.drive_async()
 
 df = pd.DataFrame(podcasts)
-Storage.save_csv(f'storage/ranking-{category_id}.csv', dataframe = df)
+Storage.save_csv(f'storage/ranking.csv', dataframe = df)
 
 #stored_podcasts = Storage.load(f'storage/ranking-{category_id}.pkl')
 
