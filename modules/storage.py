@@ -6,6 +6,10 @@ class Storage:
     def save_csv(filename, dataframe):
         dataframe.to_csv(filename, index=False, encoding='utf-8')
 
+    def load_csv(filename):
+        df = pd.read_csv(filename)
+        return df
+
     def save_pickle(filename, data):
         with open(filename, 'wb') as file:
             pickle.dump(data, file)
