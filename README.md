@@ -1,18 +1,18 @@
 # Podcast Ranking Web Scraping #desafíoPython
 
-Aplicación de web scrapping para aprender python.
+Learning Python. Web Scraping application
 
-Más en https://www.danielprimo.io/blog/web-scrapping-con-python-primeros-pasos-desafiopython
+More in https://www.danielprimo.io/blog/web-scrapping-con-python-primeros-pasos-desafiopython
 
-### Instalación
+### Installation
 
-Después de instalar Python 3.x y el gestor de paquetes `pip`
+After installing Python 3.x and package manager `pip`
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Ejecución
+### Execution
 
 ```bash
 python app.py
