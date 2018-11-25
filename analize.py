@@ -11,7 +11,7 @@ def describe_values(df, colname):
 
 def analize():
 
-    df = Storage.load_csv('storage/ranking.csv')
+    df = Storage.load_csv('storage/programs.csv')
 
     #df = df[['title','time','likes','comments']]
     #df = df.dropna() # remove rows with NaN values
@@ -24,12 +24,24 @@ def analize():
     #top by quantity of episodes
     #top(min) by stair
 
-    df_sorted_by_episodes = df[['category_id','title', 'episodes']].sort_values(by='episodes', ascending=False)
+    df_sorted_by_episodes = df[['category_id','id','title','episodes']].sort_values(by='episodes', ascending=False)
     print(df_sorted_by_episodes.head(10))
     describe_values(df_sorted_by_episodes, 'episodes')
 
-    df_sorted_by_stair = df[['title', 'stair']].sort_values(by='stair')
-    df_sorted_by_stair_unique = df_sorted_by_stair.drop_duplicates()
+    # Verify id uniqueness
 
-    print(df_sorted_by_stair_unique.head(10))
+    df_sorted_by_id = df[['id', 'title']].sort_values(by='id')
+    df_sorted_by_id_unique = df_sorted_by_id.drop_duplicates()
+    total = df_sorted_by_id_unique.count()[0]
+    print(f'total: {total}')
+
+    df_ids = df_sorted_by_id_unique[['id']]
+    df_ids_unique = df_ids.drop_duplicates()
+    total = df_ids_unique.count()[0]
+    print(f'total: {total}')
+
+    #df_sorted_by_stair = df[['title', 'stair']].sort_values(by='stair')
+    #df_sorted_by_stair_unique = df_sorted_by_stair.drop_duplicates()
+
+    #print(df_sorted_by_stair_unique.head(10))
     #describe_values(df_sorted_by_stair, 'stair')
