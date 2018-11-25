@@ -16,7 +16,8 @@ class Driver:
 
     def get_podcasts_by_category(self, category):
         category_id = category['id']
-        category_name = category['name']
+        category_name = category['slug']
+        #TODO just print in dev .env
         print(f'{category_id} {category_name}')
         category_podcasts = []
         ranker = Ranker(
@@ -34,6 +35,7 @@ class Driver:
             podcasts.extend(category_podcasts)
         return podcasts
     
+    # TODO show progress in prod .env
     def drive_async(self):
         podcasts = []
         with ProcessPoolExecutor(max_workers=4) as executor:

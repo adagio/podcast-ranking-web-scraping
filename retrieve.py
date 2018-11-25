@@ -5,7 +5,7 @@ from modules.driver import Driver
 
 def retrieve():
 
-    driver = Driver('storage/categories.csv')
+    driver = Driver('storage/subcategories.csv')
 
     #podcasts = driver.drive_sync()
     podcasts = driver.drive_async()

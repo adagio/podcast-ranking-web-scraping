@@ -36,6 +36,7 @@ class Ranker:
             self.category_id,
             page_index
         )
+        #TODO just print in dev .env
         print(url_path)
         url = self.base_path + url_path
         soup = get_soup(get_url_content(url))
