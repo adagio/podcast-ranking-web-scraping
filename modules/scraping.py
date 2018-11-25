@@ -44,6 +44,12 @@ def get_values(html_block):
 
 def build_podcast_object(html_block):
     values = get_values(html_block)
+    url = values['url']
+    # len(_1.html) = 7
+    url = url[:-7]
+    f_pos = url.rfind('f')
+    id = url[f_pos+1:]
+    values['id'] = id
     return values
 
 
