@@ -1,0 +1,12 @@
+title:
+  html_pattern: meta[itemprop="name"]
+  content_mode: content_attribute
+desc:
+  html_pattern: meta[itemprop="description"]
+  content_mode: content_attribute
+url:
+  html_pattern: meta[itemprop="description"]
+  content_mode: content_attribute
+episode:
+  html_pattern: .microphone
+  content_mode: text

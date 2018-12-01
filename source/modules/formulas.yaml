@@ -1,0 +1,20 @@
+title:
+  html_pattern: meta[itemprop="name"]
+  content_mode: content_attribute
+  enabled: true
+desc:
+  html_pattern: meta[itemprop="description"]
+  content_mode: content_attribute
+  enabled: false
+url:
+  html_pattern: meta[itemprop="url"]
+  content_mode: content_attribute
+  enabled: true
+episodes:
+  html_pattern: .microphone
+  content_mode: text
+  enabled: true
+stair:
+  html_pattern: .stair
+  content_mode: text
+  enabled: true
