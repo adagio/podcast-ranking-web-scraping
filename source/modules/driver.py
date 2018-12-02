@@ -1,3 +1,5 @@
+import logging
+
 import pandas as pd
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
@@ -17,8 +19,11 @@ class Driver:
     def get_podcasts_by_category(self, category):
         category_id = category['id']
         category_name = category['slug']
-        #TODO just print in dev .env
-        print(f'{category_id} {category_name}')
+
+        logger = logging.getLogger('infoLogger')
+        log_msg = f'{category_id} {category_name}'
+        logger.info(log_msg)
+
         category_podcasts = []
         ranker = Ranker(
             category_name=category_name,
@@ -26,6 +31,10 @@ class Driver:
             max_pages=3
         )
         category_podcasts = ranker.get_podcasts()
+
+        log_msg = f'Done. {category_id} {category_name}'
+        logger.info(log_msg)
+
         return category_podcasts
 
     def drive_sync(self):

@@ -1,3 +1,5 @@
+import logging
+
 from bs4 import BeautifulSoup
 from modules.formulas import *
 from modules.dataclass_podcast import DataClassPodcast
@@ -73,6 +75,8 @@ def scrap_podcasts(resource: BeautifulSoup, category_id, page_index):
             podcast['page_ix'] = page_index
             podcasts.append(podcast)
         except IndexError:
-            print("No se puede capturar el contenido") 
+            logger = logging.getLogger('infoLogger')
+            log_msg = 'No se puede capturar el contenido'
+            logger.info(log_msg)
 
     return podcasts
